@@ -1,121 +1,108 @@
 import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import './App.css'
+import Sidebar from './components/Sidebar'
+import Header from './components/Header'
+import { Activity, ShieldCheck, TrendingUp, MapPin } from 'lucide-react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeTab, setActiveTab] = useState('overview')
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+    <div className="app-container">
+      <Sidebar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
+
+      <main className="main-content">
+        <Header activeTab={activeTab} />
+
+        <section className="dashboard-content">
+          <div className="welcome-section">
+            <div>
+              <span className="eyebrow">PUBLIC HEALTH INTELLIGENCE</span>
+              <h2>Welcome to HealthRadar</h2>
+              <p>
+                Intelligent disease monitoring, prediction and outbreak
+                analysis — all in one place.
+              </p>
+            </div>
+
+            <div className="welcome-icon">
+              <Activity size={42} />
+            </div>
+          </div>
+
+          <div className="section-heading">
+            <div>
+              <h3>Health Overview</h3>
+              <p>Your public health monitoring workspace</p>
+            </div>
+            <span className="live-indicator">
+              <span className="status-dot"></span>
+              LIVE MONITORING
+            </span>
+          </div>
+
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-top">
+                <span>System Status</span>
+                <ShieldCheck />
+              </div>
+              <h2>Operational</h2>
+              <p className="stat-description">HealthRadar services</p>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-top">
+                <span>Monitoring Mode</span>
+                <Activity />
+              </div>
+              <h2>Active</h2>
+              <p className="stat-description">Monitoring interface</p>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-top">
+                <span>Forecasting</span>
+                <TrendingUp />
+              </div>
+              <h2>Ready</h2>
+              <p className="stat-description">Forecasting module</p>
+            </div>
+
+            <div className="stat-card">
+              <div className="stat-top">
+                <span>Coverage</span>
+                <MapPin />
+              </div>
+              <h2>India</h2>
+              <p className="stat-description">Planned city coverage</p>
+            </div>
+          </div>
+
+          <div className="info-panel">
+            <div className="info-icon">
+              <Activity size={22} />
+            </div>
+            <div>
+              <h3>HealthRadar Intelligence Platform</h3>
+              <p>
+                Explore disease prediction, explainable AI, symptom
+                clustering, outbreak mapping and forecasting through
+                the navigation panel.
+              </p>
+            </div>
+          </div>
+
+          <p className="disclaimer">
+            Prototype interface. Data and health indicators are not
+            intended for medical diagnosis.
           </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        </section>
+      </main>
+    </div>
   )
 }
 

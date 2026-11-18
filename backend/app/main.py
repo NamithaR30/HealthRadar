@@ -1,24 +1,44 @@
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.schemas import HealthResponse
 
-# Create the FastAPI application
+
 app = FastAPI(
     title="HealthRadar API",
-    description="Backend API for HealthRadar",
+    description="Backend API for AI-powered Disease Risk Prediction & Public Health Intelligence",
     version="1.0.0"
 )
 
-# Root endpoint
+
+# Configure CORS for React frontend
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 @app.get("/")
-def home():
+def read_root():
     return {
-        "message": "Welcome to HealthRadar API!",
-        "status": "Backend is running successfully"
+        "project": "HealthRadar",
+        "status": "active",
+        "docs": "/docs"
     }
 
-# Health check endpoint
-@app.get("/health")
+
+@app.get("/api/health", response_model=HealthResponse)
 def health_check():
     return {
-        "status": "healthy"
+        "status": "online",
+        "message": "HealthRadar FastAPI backend is running successfully.",
+        "version": "1.0.0"
     }
