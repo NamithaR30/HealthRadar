@@ -1,0 +1,23 @@
+
+# Python virtual environment
+backend/venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Environment variables
+.env
+
+# Node dependencies
+node_modules/
+dist/
+
+# IDE settings
+.vscode/
+
+# Machine learning models
+*.joblib
+
+# Database files
+*.db
