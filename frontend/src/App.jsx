@@ -1,109 +1,111 @@
-import { useState } from 'react'
-import './App.css'
-import Sidebar from './components/Sidebar'
-import Header from './components/Header'
-import { Activity, ShieldCheck, TrendingUp, MapPin } from 'lucide-react'
 
-function App() {
-  const [activeTab, setActiveTab] = useState('overview')
+import React, { useState } from 'react';
+
+import Sidebar from './components/Sidebar';
+import Header from './components/Header';
+
+import PredictionPage from './pages/PredictionPage';
+import ExplainableAIPage from './pages/ExplainableAIPage';
+import NlpAssistantPage from './pages/NlpAssistantPage';
+
+import './App.css';
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('overview');
 
   return (
-    <div className="app-container">
+    <div style={styles.appContainer}>
+
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
 
-      <main className="main-content">
+      <div style={styles.mainWrapper}>
+
         <Header activeTab={activeTab} />
 
-        <section className="dashboard-content">
-          <div className="welcome-section">
-            <div>
-              <span className="eyebrow">PUBLIC HEALTH INTELLIGENCE</span>
-              <h2>Welcome to HealthRadar</h2>
-              <p>
-                Intelligent disease monitoring, prediction and outbreak
-                analysis — all in one place.
+        <main style={styles.contentArea}>
+
+          {activeTab === 'radar-ai' ? (
+
+            <NlpAssistantPage />
+
+          ) : activeTab === 'prediction' ? (
+
+            <PredictionPage />
+
+          ) : activeTab === 'explainable-ai' ? (
+
+            <ExplainableAIPage />
+
+          ) : (
+
+            <div style={styles.card}>
+              <h2 style={styles.heading}>
+                Welcome to HealthRadar
+              </h2>
+
+              <p style={styles.description}>
+                You are viewing the {activeTab.toUpperCase()} module.
+
+                {activeTab === 'overview'
+                  ? ' Explore HealthRadar AI-powered public health intelligence.'
+                  : ' This module is ready for development.'}
+              </p>
+
+              <p style={styles.description}>
+                Select Radar AI to use the conversational symptom
+                assistant, Disease Prediction to test the ML screening
+                API, or Explainable AI to inspect SHAP feature
+                contributions.
               </p>
             </div>
 
-            <div className="welcome-icon">
-              <Activity size={42} />
-            </div>
-          </div>
+          )}
 
-          <div className="section-heading">
-            <div>
-              <h3>Health Overview</h3>
-              <p>Your public health monitoring workspace</p>
-            </div>
-            <span className="live-indicator">
-              <span className="status-dot"></span>
-              LIVE MONITORING
-            </span>
-          </div>
-
-          <div className="stats-grid">
-            <div className="stat-card">
-              <div className="stat-top">
-                <span>System Status</span>
-                <ShieldCheck />
-              </div>
-              <h2>Operational</h2>
-              <p className="stat-description">HealthRadar services</p>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-top">
-                <span>Monitoring Mode</span>
-                <Activity />
-              </div>
-              <h2>Active</h2>
-              <p className="stat-description">Monitoring interface</p>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-top">
-                <span>Forecasting</span>
-                <TrendingUp />
-              </div>
-              <h2>Ready</h2>
-              <p className="stat-description">Forecasting module</p>
-            </div>
-
-            <div className="stat-card">
-              <div className="stat-top">
-                <span>Coverage</span>
-                <MapPin />
-              </div>
-              <h2>India</h2>
-              <p className="stat-description">Planned city coverage</p>
-            </div>
-          </div>
-
-          <div className="info-panel">
-            <div className="info-icon">
-              <Activity size={22} />
-            </div>
-            <div>
-              <h3>HealthRadar Intelligence Platform</h3>
-              <p>
-                Explore disease prediction, explainable AI, symptom
-                clustering, outbreak mapping and forecasting through
-                the navigation panel.
-              </p>
-            </div>
-          </div>
-
-          <p className="disclaimer">
-            Prototype interface. Data and health indicators are not
-            intended for medical diagnosis.
-          </p>
-        </section>
-      </main>
+        </main>
+      </div>
     </div>
-  )
+  );
 }
 
-export default App
+const styles = {
+  appContainer: {
+    display: 'flex',
+    minHeight: '100vh',
+    backgroundColor: '#080D18'
+  },
+
+  mainWrapper: {
+    flex: 1,
+    minWidth: 0,
+    marginLeft: '72px',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+
+  contentArea: {
+    padding: '32px',
+    flex: 1
+  },
+
+  card: {
+    backgroundColor: '#111D30',
+    border: '1px solid #253650',
+    borderRadius: '12px',
+    padding: '32px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+  },
+
+  heading: {
+    color: '#009DFF',
+    marginBottom: '12px'
+  },
+
+  description: {
+    color: '#91A0B8',
+    lineHeight: '1.6',
+    marginBottom: '10px'
+  }
+};

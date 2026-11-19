@@ -6,6 +6,8 @@ from app.schemas import HealthResponse
 from app.database import engine
 from app import models
 
+from app.routers import prediction, nlp_router
+
 
 # Automatically create database tables
 models.Base.metadata.create_all(bind=engine)
@@ -17,6 +19,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
+app.include_router(prediction.router)
+app.include_router(nlp_router.router)
 
 # Configure CORS
 origins = [

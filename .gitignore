@@ -21,3 +21,11 @@ dist/
 
 # Database files
 *.db
+
+# HealthRadar dataset and generated reports
+backend/data/*.csv
+backend/data/audit/
+backend/data/evaluation/
+
+# Experimental model files
+backend/saved_models/model_rf_experiment.joblib
