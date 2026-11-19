@@ -1,6 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-
+@import "leaflet/dist/leaflet.css";
 :root {
   --bg-main: #080D18;
   --bg-secondary: #0D1525;
@@ -92,4 +92,13 @@ h1, h2, h3, h4 {
   white-space: nowrap;
   z-index: 200;
   pointer-events: none;
+}
+
+
+/* Dark theme adjustments for Leaflet popups */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: #111D30;
+  color: #F1F5FF;
+  border: 1px solid #253650;
 }

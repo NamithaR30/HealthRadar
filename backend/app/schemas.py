@@ -59,3 +59,66 @@ class NLPParseResponse(BaseModel):
     negated_symptoms: List[str]
     duration: Optional[str] = None
     severity: Optional[str] = None
+
+
+class ClusterSummary(BaseModel):
+    cluster_id: int
+    label: str
+    report_count: int
+    top_symptoms: List[str]
+    top_cities: List[str]
+    is_noise: bool
+
+
+class ClusteringResponse(BaseModel):
+    total_reports_analyzed: int
+    clusters_found: int
+    noise_reports: int
+    clusters: List[ClusterSummary]
+    disclaimer: str
+
+class CityOutbreakStatus(BaseModel):
+    city: str
+    latitude: float
+    longitude: float
+    recent_mean: float
+    baseline_mean: float
+    baseline_std: float
+    z_score: float
+    status: str
+    dominant_disease: str
+    recent_7d_total: int
+    daily_series: List[int]
+
+
+class OutbreakResponse(BaseModel):
+    monitored_cities: int
+    high_anomaly_count: int
+    moderate_anomaly_count: int
+    normal_count: int
+    data_source: str
+    disclaimer: str
+    cities: List[CityOutbreakStatus]
+
+    # Phase 14: Disease Forecasting schemas
+
+class ForecastPoint(BaseModel):
+    day_label: str
+    day_index: int
+    actual: Optional[float] = None
+    moving_avg_baseline: Optional[float] = None
+    arima_forecast: Optional[float] = None
+    lower_bound: Optional[float] = None
+    upper_bound: Optional[float] = None
+
+
+class ForecastResponse(BaseModel):
+    city: str
+    dominant_disease: str
+    model_used: str
+    horizon_days: int
+    mae: float
+    rmse: float
+    data_source: str
+    disclaimer: str
+    series: List[ForecastPoint]

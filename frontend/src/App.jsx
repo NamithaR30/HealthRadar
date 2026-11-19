@@ -4,67 +4,74 @@ import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 
+import {
+  OverviewView,
+  AnalyticsView,
+  AboutView,
+} from './pages/DashboardViews';
+
 import PredictionPage from './pages/PredictionPage';
 import ExplainableAIPage from './pages/ExplainableAIPage';
 import NlpAssistantPage from './pages/NlpAssistantPage';
-
-import './App.css';
+import ClustersPage from './pages/ClustersPage';
+import OutbreakMapPage from './pages/OutbreakMapPage';
+import ForecastingPage from './pages/ForecastingPage';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('overview');
 
+  const renderPage = () => {
+    switch (activeTab) {
+      case 'radar-ai':
+        return <NlpAssistantPage />;
+
+      case 'prediction':
+        return <PredictionPage />;
+
+      case 'explainable-ai':
+        return <ExplainableAIPage />;
+
+      case 'clusters':
+        return <ClustersPage />;
+
+      case 'outbreak-map':
+        return <OutbreakMapPage />;
+
+      case 'forecasting':
+        return <ForecastingPage />;
+
+      case 'analytics':
+        return <AnalyticsView />;
+
+      case 'about':
+        return <AboutView />;
+
+      case 'overview':
+      default:
+        return <OverviewView onNavigate={setActiveTab} />;
+    }
+  };
+
   return (
     <div style={styles.appContainer}>
 
+      {/* Sidebar navigation */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
       />
 
+      {/* Main application area */}
       <div style={styles.mainWrapper}>
 
+        {/* Dynamic page header */}
         <Header activeTab={activeTab} />
 
+        {/* Selected page */}
         <main style={styles.contentArea}>
-
-          {activeTab === 'radar-ai' ? (
-
-            <NlpAssistantPage />
-
-          ) : activeTab === 'prediction' ? (
-
-            <PredictionPage />
-
-          ) : activeTab === 'explainable-ai' ? (
-
-            <ExplainableAIPage />
-
-          ) : (
-
-            <div style={styles.card}>
-              <h2 style={styles.heading}>
-                Welcome to HealthRadar
-              </h2>
-
-              <p style={styles.description}>
-                You are viewing the {activeTab.toUpperCase()} module.
-
-                {activeTab === 'overview'
-                  ? ' Explore HealthRadar AI-powered public health intelligence.'
-                  : ' This module is ready for development.'}
-              </p>
-
-              <p style={styles.description}>
-                Select Radar AI to use the conversational symptom
-                assistant, Disease Prediction to test the ML screening
-                API, or Explainable AI to inspect SHAP feature
-                contributions.
-              </p>
-            </div>
-
-          )}
-
+          {renderPage()}
         </main>
+
       </div>
     </div>
   );
@@ -74,20 +81,27 @@ const styles = {
   appContainer: {
     display: 'flex',
     minHeight: '100vh',
-    backgroundColor: '#080D18'
+    width: '100%',
+    backgroundColor: '#080D18',
+    color: '#F1F5FF',
   },
 
   mainWrapper: {
     flex: 1,
     minWidth: 0,
+    minHeight: '100vh',
     marginLeft: '72px',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    backgroundColor: '#080D18',
   },
 
   contentArea: {
+    flex: 1,
+    width: '100%',
+    minWidth: 0,
+    boxSizing: 'border-box',
     padding: '32px',
-    flex: 1
   },
 
   card: {
@@ -95,17 +109,17 @@ const styles = {
     border: '1px solid #253650',
     borderRadius: '12px',
     padding: '32px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+    boxShadow: '0 4px 20px rgba(0,0,0,0.2)',
   },
 
-  heading: {
+  welcomeTitle: {
     color: '#009DFF',
-    marginBottom: '12px'
+    marginBottom: '12px',
+    fontSize: '24px',
   },
 
-  description: {
+  welcomeText: {
     color: '#91A0B8',
     lineHeight: '1.6',
-    marginBottom: '10px'
-  }
+  },
 };
